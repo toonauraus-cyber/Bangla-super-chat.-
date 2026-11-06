@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 
 const express = require("express");
@@ -61,7 +60,7 @@ const sessionMiddleware = session({
 
 app.use(sessionMiddleware);
 io.engine.use(sessionMiddleware);
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(__dirname));
 
 const asyncRoute = fn => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(next);
@@ -572,11 +571,10 @@ io.on("connection", async socket => {
 
 // PAGE ROUTES
 app.get("/admin", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "admin.html"));
+  res.sendFile(path.join(__dirname, "admin.html"));
 });
-
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 // ERROR HANDLER
